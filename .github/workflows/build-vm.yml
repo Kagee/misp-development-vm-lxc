@@ -1,0 +1,42 @@
+name: Build MISP Development VM
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-vm:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Clone MISP repository
+      run: |
+        git clone https://github.com/MISP/MISP.git /tmp/misp
+        
+    - name: Set up VM environment
+      run: |
+        # Install required dependencies
+        sudo apt-get update
+        sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
+        
+    - name: Build VM image
+      run: |
+        # Example: Create VM using the scripts from this repository
+        # ./scripts/build-vm.sh /tmp/misp
+        echo "Building VM from MISP repository..."
+        echo "MISP source location: /tmp/misp"
+        
+    - name: Test VM
+      run: |
+        # Example: Test the VM image
+        # ./scripts/test-vm.sh
+        echo "Testing VM image..."
