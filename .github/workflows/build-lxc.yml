@@ -1,0 +1,40 @@
+name: Build MISP Development LXC Container
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-lxc:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Clone MISP repository
+      run: |
+        git clone https://github.com/MISP/MISP.git /tmp/misp
+        
+    - name: Set up LXC environment
+      run: |
+        # Install LXC/LXD
+        sudo apt-get update
+        sudo apt-get install -y lxc lxd
+        sudo lxd init --auto
+        
+    - name: Build LXC container
+      run: |
+        # Example: Create LXC container using the scripts from this repository
+        # ./scripts/build-lxc.sh /tmp/misp
+        echo "Building LXC container from MISP repository..."
+        echo "MISP source location: /tmp/misp"
+        
+    - name: Test LXC container
+      run: |
+        # Example: Test the LXC container
+        # ./scripts/test-lxc.sh
+        echo "Testing LXC container..."
